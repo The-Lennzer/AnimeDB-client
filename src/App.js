@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LandingPage from './LandingUI';
+import AnimeDescriptionPage from './Components/AnimeDescriptionPage';
+import QueryExecuter from './QueryExecuter';
 
 function App() {
+  const [selectedAnime, setSelectedAnime] = useState(null);
+  const [animeData, setAnimeData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('api/anime');
+        if (!response.ok) {
+          throw new Error('Network response was not ok.');
+        }
+        const data = await response.json();
+        setAnimeData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleAnimeSelect = (anime) => {
+    setSelectedAnime(anime);
+  };
+
+  const handleBackToLanding = () => {
+    setSelectedAnime(null);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage animeData={animeData} onAnimeSelect={handleAnimeSelect} />} />
+        <Route path="/query-page" element={<QueryExecuter />} />
+        <Route path="/anime/:title" element={<AnimeDescriptionPage animeData={animeData} onBack={handleBackToLanding} />} />
+      </Routes>
+    </Router>
   );
 }
 

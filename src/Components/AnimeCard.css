@@ -1,0 +1,42 @@
+.anime-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 10px;
+    width: 200px;
+    text-align: left;
+    text-decoration: none;
+    color: black;
+    transition: transform 0.2s;
+    text-decoration: none;
+  }
+  
+  .anime-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .anime-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .anime-info {
+    padding: 10px;
+    text-decoration: none;
+  }
+  
+  .anime-name {
+    font-size: 18px;
+    margin: 0;
+    text-decoration: none;
+  }
+  
+  .anime-genre {
+    color: gray;
+    text-decoration: none;
+  }
+  
+  .anime-card-link {
+    text-decoration: none; /* Add this to ensure the link itself has no underline */
+    color: inherit; /* This ensures the link takes the color of the parent element */
+  }
